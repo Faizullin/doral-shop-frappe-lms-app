@@ -1,0 +1,196 @@
+{% extends 'templates/layouts/default.html' %}
+
+{% set title = "Все продукты" %}
+
+{% block content %}
+{% include 'templates/components/header.html' %}
+
+<section class="site-breadcurmbs">
+    <div class="container-fluid">
+        <div class="row py-3">
+            <div
+                class="d-flex  justify-content-center justify-content-sm-between align-items-center">
+                <nav class="main-menu d-flex navbar navbar-expand-lg">
+
+                    <button class="navbar-toggler" type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar"
+                        aria-controls="offcanvasNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="offcanvas offcanvas-end" tabindex="-1"
+                        id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel">
+
+                        <div class="offcanvas-header justify-content-center">
+                            <button type="button" class="btn-close"
+                                data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+
+                        <div class="offcanvas-body">
+
+                            <ul
+                                class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
+                                {% for item in breadcrumbs %}
+                                <li
+                                    class="nav-item {% if item.active %}active{% endif %}">
+                                    <a href="{{ item.url }}"
+                                        class="nav-link {% if item.active %}active{% endif %}">{{
+                                        item.title }}</a>
+                                </li>
+                                {% if not loop.last %}
+                                <li class="nav-divider">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="8" height="8" viewBox="0 0 8 8"
+                                        fill="none">
+                                        <circle cx="4" cy="4" r="4"
+                                            fill="#000000" />
+                                    </svg>
+                                </li>
+                                {% endif %}
+
+                                {% endfor %}
+                            </ul>
+
+                        </div>
+
+                    </div>
+                </nav>
+                <div
+                    class="d-flex justify-content-center justify-content-sm-end align-items-center">
+                    <select id="order-by-select-field"
+                        class="m-select form-select form-select-sm me-2">
+                        <option selected value="newest">По новизне</option>
+                        <option value="price_low_high">По цене: сначала
+                            дешевые</option>
+                        <option value="price_high_low">По цене: сначала
+                            дорогие</option>
+                        <option value="popular">По популярности</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 overflow-hidden">
+    <div class="container-fluid">
+        <div class="row">
+            <div
+                id="product-listing"
+                class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
+                {% for product in products %}
+                <div class="col">
+                    <div class="product-item card p-3 border rounded">
+                        <figure>
+                            <a href="{{ product.url or '#' }}"
+                                title="{{ product.title }}">
+                                <img src="{{ product.thumbnail }}"
+                                    class="tab-image"
+                                    alt="{{ product.title }}" />
+                            </a>
+                        </figure>
+                        <span class="d-block fw-bold">{{ product.price }}</span>
+                        <h3 class>{{ product.title }}</h3>
+                        <div class="mt-2">
+                            <a href="#"
+                                class="add-to-cart-btn btn btn-primary py-1 w-100">Корзина</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <nav class="d-flex justify-content-center mt-4">
+                <div class="product-paging-area"></div>
+                {# <li class="page-item">
+                    <a class="page-link" href="#">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </li> #}
+                <!-- <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                    </li> -->
+                <!-- <li class="page-item">
+                        <a class="page-link" href="#">5</a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">…</a>
+                    </li> -->
+                {# <li class="page-item">
+                    <a class="page-link" href="#">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li> #}
+            </nav>
+
+        </div>
+    </div>
+</section>
+
+{% include 'templates/components/footer.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+	frappe.ready(() => {
+        console.log("frappe.ready");
+		$('.btn-prev, .btn-next').click((e) => {
+			const $btn = $(e.target);
+			$btn.prop('disabled', true);
+			const start = $btn.data('start');
+			let query_params = frappe.utils.get_query_params();
+			query_params.start = start;
+			let path = window.location.pathname + '?' + frappe.utils.get_url_from_dict(query_params);
+			window.location.href = path;
+		});
+	});
+    $(() => {
+        class ProductListing {
+            constructor() {
+                let me = this;
+                let is_item_group_page = $(".item-group-content").data("item-group");
+                this.item_group = is_item_group_page || null;
+    
+                let view_type = localStorage.getItem("product_view") || "List View";
+    
+                // Render Product Views, Filters & Search
+                new webshop.ProductView({
+                    view_type: view_type,
+                    products_section: $('#product-listing'),
+                    item_group: me.item_group,
+                });
+    
+                this.bind_card_actions();
+            }
+    
+            bind_card_actions() {
+                // webshop.webshop.shopping_cart.bind_add_to_cart_action();
+                // webshop.webshop.wishlist.bind_wishlist_action();
+            }
+        }
+    
+        new ProductListing();
+    });
+     $(document).ready(function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchValue = (urlParams.get('search') || "").trim();
+        if(searchValue) {
+            window.webshop.webshop.gloabl_search.instance.setInitialValue(searchValue);
+        }
+     });
+</script>
+{% endblock %}
+
+{% set breadcrumbs = [
+{
+"title": "Главная",
+"active": false,
+"url": "/"
+}, {
+"title": "Каталог",
+"active": true,
+"url": "/catalogue"
+}
+] %}

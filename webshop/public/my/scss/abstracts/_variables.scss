@@ -1,0 +1,25 @@
+// Primary project variables
+$primary: #da618d;
+$accent: #fbe3ec;
+$dark: #000F41;
+// $light: #f8f9fa;
+// $text-color: #747474;
+$heading-font: "Montserrat", sans-serif;
+
+// $body-font-family: $heading-font;
+// $body-font-size: 1rem;
+// $body-line-height: 2;
+// $body-color: $text-color;
+
+// Bootstrap Theme Colors
+$theme-colors: (
+    "primary": $primary,
+    "accent": $accent,
+    "dark": $dark,
+    "light": #fff,
+    // "muted": $text-color
+);
+
+// // Optional spacing tweaks
+// $section-padding: 2.5rem;
+// $gutter-x: 3rem;

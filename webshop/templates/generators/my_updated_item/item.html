@@ -1,0 +1,242 @@
+{% extends "templates/layouts/default.html" %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+{% include 'templates/components/header.html' %}
+
+<section class="site-breadcurmbs">
+	<div class="container-fluid">
+		<div class="row py-3">
+			<div
+				class="d-flex  justify-content-center justify-content-sm-between align-items-center">
+				<nav class="main-menu d-flex navbar navbar-expand-lg">
+
+					<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+						data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+
+					<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+						aria-labelledby="offcanvasNavbarLabel">
+
+						<div class="offcanvas-header justify-content-center">
+							<button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+								aria-label="Close"></button>
+						</div>
+
+						<div class="offcanvas-body">
+
+							<ul
+								class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
+								{% for item in breadcrumbs %}
+								<li class="nav-item {% if item.active %}active{% endif %}">
+									<a href="{{ item.url }}"
+										class="nav-link {% if item.active %}active{% endif %}">{{
+										item.title }}</a>
+								</li>
+								{% if not loop.last %}
+								<li class="nav-divider">
+									<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"
+										viewBox="0 0 8 8" fill="none">
+										<circle cx="4" cy="4" r="4" fill="#000000" />
+									</svg>
+								</li>
+								{% endif %}
+
+								{% endfor %}
+							</ul>
+
+						</div>
+
+					</div>
+				</nav>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Product Top Section -->
+<section class="py-5 overflow-hidden product-detail-wrapper">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="section-header d-flex flex-wrap justify-content-between mb-2">
+					<h2 class="section-title" itemprop="name">
+						{{ title }}
+					</h2>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+
+				<div class="row mx-5">
+					<!-- Left: Product Image + Thumbs -->
+					<div class="col-md-5 mb-5 mb-md-0">
+						<div class="product-detail-image-carousel swiper">
+							<div class="swiper-wrapper"></div>
+							<div class="product-detail-image-carousel-navigation d-flex gap-4 mt-3"
+								data-slideshow="slides">
+								{% if slides %}
+								{% for item in slides %}
+								<div class="thumb-item">
+									<img class="img-fluid border rounded"
+										src="{{ item.image }}" alt="{{ item.heading }}" />
+								</div>
+								{% endfor %}
+								{% endif %}
+							</div>
+						</div>
+					</div>
+
+					{% set cart_settings = shopping_cart.cart_settings %}
+					{% set product_info = shopping_cart.product_info %}
+					{% set price_info = product_info.get('price') or {} %}
+					<!-- Center: Characteristics -->
+					<div class="col-md-4">
+						{% set block_item = characteristic_blocks[0] %}
+						<div class="product-detail-block">
+							<h3 class="block-title mb-4">{{ block_item.field_name }}</h3>
+							<div class="row">
+								{% for item in block_item.fields %}
+								<div class="col-6 label">{{ item.field_name }}</div>
+								<div class="col-6">
+									{% if item.field_type == "Link" %}
+									<a href="{{ item.field_value }}">{{ item.field_value }}</a>
+									{% else %}
+									{{ item.field_value }}
+									{% endif %}
+								</div>
+								{% endfor %}
+							</div>
+
+						</div>
+
+						{% set block_item = characteristic_blocks[1] %}
+						<div class="product-detail-block">
+							<h3 class="block-title mb-4">{{ block_item.field_name }}</h3>
+							<div class="row">
+								{% for item in block_item.fields %}
+								<div class="col-6 label">{{ item.field_name }}</div>
+								<div class="col-6">
+									{% if item.field_type == "Link" %}
+									<a href="{{ item.field_value }}">{{ item.field_value }}</a>
+									{% else %}
+									{{ item.field_value }}
+									{% endif %}
+								</div>
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+
+					<!-- Right: Price + Buy -->
+					<div class="col-md-3">
+						<div class="cart-block">
+							{% include "templates/generators/my_updated_item/item_add_to_cart.html" %}
+
+						</div>
+					</div>
+				</div>
+
+				<!-- Bottom: Characteristics Grid -->
+				<!-- <div class="product-detail-block bottom-block">
+					<h3 class="block-title mb-4">Характеристики</h3>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="row">
+								<div class="col-6 label">Цвет</div>
+								<div class="col-6">Зелёный</div>
+								<div class="col-6 label">Длина</div>
+								<div class="col-6">2 см</div>
+								<div class="col-6 label">Категория</div>
+								<div class="col-6">Чеки</div>
+							</div>
+							<div class="row">
+								<div class="col-6 label">Цвет</div>
+								<div class="col-6">Зелёный</div>
+								<div class="col-6 label">Длина</div>
+								<div class="col-6">2 см</div>
+								<div class="col-6 label">Категория</div>
+								<div class="col-6">Чеки</div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+			</div>
+		</div>
+	</div>
+</section>
+
+{% include 'templates/components/footer.html' %}
+{% endblock %}
+
+{% block scripts %}
+{{ include_script("frappe-web.bundle.js") }}
+{{ include_script("controls.bundle.js") }}
+{{ include_script("dialog.bundle.js") }}
+
+<script>
+	$(document).ready(function () {
+		const thumbItems = document.querySelectorAll(".product-detail-image-carousel-navigation .thumb-item");
+		// add swipes aacording to thumbnails list
+		let slideListHtml = "";
+		thumbItems.forEach(function (item, index) {
+			const image = $(item)
+				.find("img")
+				.attr("src");
+			slideListHtml += `<div class="swiper-slide">
+				<img src="${image}" alt="Thumbnail" class="w-100 img-fluid border rounded">
+				</div>`;
+		});
+		$(".product-detail-image-carousel .swiper-wrapper").html(slideListHtml);
+
+		const swiper = new Swiper('.product-detail-image-carousel', {
+			slidesPerView: 1,
+			// spaceBetween: 10,
+			effect: "fade",
+			fadeEffect: {
+				crossFade: true
+			},
+			loop: false
+		});
+		$(document).on("click", ".product-detail-image-carousel-navigation .thumb-item", function () {
+			const index = $(this).index();
+			swiper.slideTo(index);
+			$(".product-detail-image-carousel-navigation .thumb-item").removeClass("active");
+			$(this).addClass("active");
+		});
+		$(".product-detail-image-carousel-navigation .thumb-item").first().addClass("active");
+	});
+</script>
+{% endblock %}
+
+{% set breadcrumbs = [
+{
+"title": "Главная",
+"url": "/",
+"active": false
+}, {
+"title": "Каталог",
+"url": "/catalogue",
+"active": false
+}, {
+"title": title,
+"url": "/products/detail",
+"active": true
+}
+] %}
+
+{% set product = {
+"item_name": "Гарри Поттер и Проклятое Дитя",
+"item_code": "HP001",
+"image": "/src/assets/my/images/product-thumb-1.png",
+"color": "Зеленый",
+"length": "2 см",
+"item_group": "Чехи",
+"description": "Код товара",
+"brand": "Адидас",
+"price": 1000
+} %}

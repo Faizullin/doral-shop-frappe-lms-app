@@ -1,0 +1,288 @@
+{% extends 'templates/layouts/default.html' %}
+
+{% set title = "Главная" %}
+
+{% block content %}
+{% include 'templates/components/header.html' %}
+
+<section class="pb-3">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="banner-blocks">
+
+          <div class="banner-ad large bg-info block-1">
+
+            <div class="swiper main-swiper">
+              <div class="swiper-wrapper">
+
+                {% for brand in brand_blocks %}
+
+                <div class="swiper-slide">
+                  <div class="row m-0 banner-content p-5">
+                    <div class="content-wrapper col-md-7">
+                      <h3 class="banner-title text-white">{{ brand.title }}</h3>
+                      <p class="banner-subtitle text-white">{{ brand.subtitle
+                        }}</p>
+                      <a href="{{ brand.url }}"
+                        class="link-btn btn btn-primary text-uppercase fs-6 rounded-2 px-4 mt-3">
+                        Смотреть
+                      </a>
+                    </div>
+                    <div class="img-wrapper col-md-5">
+                      <img src="{{ brand.image }}" class="img-fluid">
+                    </div>
+                  </div>
+                </div>
+
+                {% endfor %}
+              </div>
+
+              <div class="swiper-pagination"></div>
+              <div class="swiper-navigation-wrapper">
+                <div class="swiper-button-prev btn-mech"></div>
+                <div class="swiper-button-next btn-mech"></div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+        <!-- / Banner Blocks -->
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-3 overflow-hidden">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+
+        <div
+          class="section-header d-flex flex-wrap justify-content-between mb-2">
+          <h2 class="section-title">Навигация</h2>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+
+        <div
+          class="navigation-list row justify-content-between justify-content-md-start ">
+          <a href="#" class="col nav-link category-item me-xl-5">
+            <img src="/assets/webshop/my/images/navigation/Conference.png"
+              alt="Category Thumbnail">
+            <h3 class="nav-link-title">О компании</h3>
+          </a>
+          <a href="#" class="col nav-link category-item me-xl-5">
+            <img src="/assets/webshop/my/images/navigation/Mention.png"
+              alt="Category Thumbnail">
+            <h3 class="nav-link-title">Контакты</h3>
+          </a>
+          <a href="#" class="col nav-link category-item me-xl-5">
+            <img src="/assets/webshop/my/images/navigation/CardPayment.png"
+              alt="Category Thumbnail">
+            <h3 class="nav-link-title">Оплата и доставка</h3>
+          </a>
+          <a href="#" class="col nav-link category-item me-xl-5">
+            <img src="/assets/webshop/my/images/navigation/Shopping.png"
+              alt="Category Thumbnail">
+            <h3 class="nav-link-title">Возврат и обмен</h3>
+          </a>
+          <a href="#" class="col nav-link category-item me-xl-5">
+            <img src="/assets/webshop/my/images/navigation/Consulting.png"
+              alt="Category Thumbnail">
+            <h3 class="nav-link-title">Предложения и сотрудничество</h3>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-3">
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="bootstrap-tabs product-tabs">
+          <div
+            class="tabs-header section-header d-flex flex-wrap justify-content-between mb-5">
+            <h2 class="section-title">Хиты продаж</h2>
+            <div class="d-flex align-items-center">
+              <a href="/catalogue"
+                class="view-all-btn btn-link text-decoration-none">Смотреть все
+                →</a>
+            </div>
+          </div>
+
+          <div class="tab-content" id="nav-tabContent">
+            <!-- Tab Pane - All -->
+            <div class="tab-pane fade show active" id="nav-all" role="tabpanel"
+              aria-labelledby="nav-all-tab">
+              <div
+                class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+                {% for product in hit_products %}
+                <div class="col">
+                  <div class="product-item position-relative">
+                    <figure>
+                      <a href="{{ product.url or '#' }}"
+                        title="{{ product.title }}">
+                        <img src="{{ product.image }}" class="tab-image"
+                          alt="{{ product.title }}">
+                      </a>
+                    </figure>
+
+                    <span class="price">{{ product.price.price_list_rate }} {{
+                      product.price.currency }}</span>
+                    <h3>{{ product.title }}</h3>
+
+                    <div class="d-flex">
+                      <button
+                        class="add-to-cart-btn btn btn-primary py-1">Корзина</button>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Tab Pane - Fruits -->
+            <div class="tab-pane fade" id="nav-fruits" role="tabpanel"
+              aria-labelledby="nav-fruits-tab">
+              <div
+                class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+              </div>
+            </div>
+
+            <!-- Tab Pane - Juices -->
+            <div class="tab-pane fade" id="nav-juices" role="tabpanel"
+              aria-labelledby="nav-juices-tab">
+              <div
+                class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 overflow-hidden">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+
+        <div
+          class="section-header d-flex flex-wrap justify-content-between mb-5">
+          <h2 class="section-title">Популярные категории</h2>
+
+          <div class="d-flex align-items-center">
+            <a href="/catalogue/category"
+              class="view-all-btn btn-link text-decoration-none">Каталог
+              категорий →</a>
+            <div class="swiper-buttons">
+              <button class="swiper-prev category-carousel-prev btn">❮</button>
+              <button class="swiper-next category-carousel-next btn">❯</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="category-carousel swiper">
+          <div class="swiper-wrapper">
+            {% for category in popular_categories %}
+            <a href="{{ category.url }}"
+              class="nav-link category-item px-2 py-2 swiper-slide">
+              <h3 class="category-title">{{ category.title }}</h3>
+              <img src="{{ category.image }}" alt="{{ category.name }}">
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 overflow-hidden">
+  <div class="container-fluid py-3">
+    <div class="row">
+      <div class="col-md-12">
+
+        <div
+          class="section-header d-flex flex-wrap flex-wrap justify-content-between mb-5">
+
+          <h2 class="section-title">Новинки магазина</h2>
+
+          <div class="d-flex align-items-center">
+            <a href="/catalogue" class="btn-link text-decoration-none">Смотреть
+              все →</a>
+            <div class="swiper-buttons">
+              <button class="swiper-prev brand-carousel-prev btn">❮</button>
+              <button class="swiper-next brand-carousel-next btn">❯</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="products-carousel swiper">
+          <div class="swiper-wrapper">
+            {% for product in new_arrival_products %}
+            <div class="product-item position-relative swiper-slide">
+              <figure>
+                <a href="{{ product.url or '#' }}" title="{{ product.title }}">
+                  <img src="{{ product.image }}" class="tab-image"
+                    alt="{{ product.title }}">
+                </a>
+              </figure>
+
+              <span class="price">{{ product.price.price_list_rate }} {{
+                product.price.currency }}</span>
+              <h3>{{ product.title }}</h3>
+              <div class="d-flex">
+                <button
+                  class="add-to-cart-btn btn btn-primary py-1">Корзина</button>
+              </div>
+            </div>
+            {% endfor %}
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include 'templates/components/footer.html' %}
+{% endblock %}
+
+{# {% block scripts %}
+<script>
+    $(document).ready(function () {
+      $(".products-carousel .swiper-slide").each(function () {
+        var $this = $(this);
+        console.log($this);
+      });
+    });
+  </script>
+{% endblock %} #}

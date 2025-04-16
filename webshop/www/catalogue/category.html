@@ -1,0 +1,104 @@
+{% extends 'templates/layouts/default.html' %}
+
+{% set title = "Каталог" %}
+
+{% block content %}
+{% include 'templates/components/header.html' %}
+
+<section class="site-breadcurmbs">
+    <div class="container-fluid">
+        <div class="row py-3">
+            <div
+                class="d-flex  justify-content-center justify-content-sm-between align-items-center">
+                <nav class="main-menu d-flex navbar navbar-expand-lg">
+
+                    <button class="navbar-toggler" type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar"
+                        aria-controls="offcanvasNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="offcanvas offcanvas-end" tabindex="-1"
+                        id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel">
+
+                        <div class="offcanvas-header justify-content-center">
+                            <button type="button" class="btn-close"
+                                data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+
+                        <div class="offcanvas-body">
+                            <ul
+                                class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
+                                {% for item in breadcrumbs %}
+                                <li
+                                    class="nav-item {% if item.active %}active{% endif %}">
+                                    <a href="{{ item.url }}"
+                                        class="nav-link {% if item.active %}active{% endif %}">{{
+                                        item.title }}</a>
+                                </li>
+                                {% if not loop.last %}
+                                <li class="nav-divider">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="8" height="8" viewBox="0 0 8 8"
+                                        fill="none">
+                                        <circle cx="4" cy="4" r="4"
+                                            fill="#000000" />
+                                    </svg>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 overflow-hidden">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="w-100 category-list-view row">
+                    {% for category in categories %}
+                    <div class="col-6 col-sm-4 col-md-3 mb-4">
+                        <a href="{{ category.url }}"
+                            class="w-100 nav-link category-item d-block h-100 border rounded">
+                            <h3 class="category-title p-3 ">{{ category.title
+                                }}</h3>
+                            <img src="{{ category.image }}"
+                                alt="{{ category.title }}"
+                                class="w-100 img-fluid">
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include 'templates/components/footer.html' %}
+{% endblock %}
+
+{% set breadcrumbs = [
+{
+"title": "Главная",
+"active": false,
+"url": "/"
+}, {
+"title": "Каталог",
+"active": false,
+"url": "/catalogue"
+}, {
+"title": "Категория",
+"active": true,
+"url": ""
+}
+] %}

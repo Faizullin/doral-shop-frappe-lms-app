@@ -1,0 +1,11 @@
+import './init'
+import './base'
+
+import './customer_reviews'
+import './product_ui/grid'
+import './product_ui/list'
+// import './product_ui/search'
+import './product_ui/views'
+import './search'
+// import './shopping_cart'
+// import './wishlist'

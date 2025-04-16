@@ -1,0 +1,113 @@
+header {
+    .top-bar  {
+        &-links {
+            a {
+                font-size: 13px;
+                text-decoration: none;
+            }
+        }
+        &-contacts {
+            font-family: "Rubik", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 500;
+            font-style: normal;
+          
+            text-transform: uppercase;
+        }
+        .lang-switch {
+            a {
+                font-size: 14px;
+                text-decoration: none;
+                border-radius: 15px;
+                
+                cursor: pointer;
+
+                &.selected {
+                    border: 1px solid var(--primary-color);
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+
+    .search-bar {
+
+        .catalog-btn,
+        form {
+            height: 43px;
+        }
+
+        .catalog-btn {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        form {
+            input {
+                height: 100%;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+    }
+
+    .header-actions-group-wrapper {
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .cart-btn {
+            position: relative;
+
+            .cart-count-badge {
+                position: absolute;
+                top: -5px;
+                right: -5px;
+                font-size: 0.8rem;
+                background-color: var(--primary-color);
+                color: #fff;
+                border-radius: 50%;
+                width: 17px;
+                height: 17px;
+                aspect-ratio: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+}
+
+
+
+
+footer {
+    --bs-nav-link-color:  rgba(0, 15, 65, 0.7);
+    .upper-line {
+        background-color: rgba(218, 97, 141, 0.5);
+        height: 4px;
+    }
+    
+
+    .nav-link{
+        font-weight: 500;;
+    }
+    
+    .social-widget {
+
+        .mail-text {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        p{
+            margin:0;
+        }
+    }
+}
