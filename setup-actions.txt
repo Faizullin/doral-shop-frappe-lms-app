@@ -1,0 +1,95 @@
+UBUNTU 22.04:
+sudo apt update && sudo apt -y upgrade && sudo apt-get install git -y
+
+sudo adduser frappe
+usermod -aG sudo frappe
+su frappe 
+cd /home/frappe
+
+python3 -V
+sudo apt-get install python3-dev python3-setuptools python3-pip python3-distutils -y
+sudo apt-get install virtualenv -y
+sudo apt install python3.10-venv -y
+sudo apt-get install software-properties-common -y
+sudo apt install mariadb-server -y
+sudo apt-get install redis-server -y
+sudo mysql_secure_installation
+sudo apt-get install libmysqlclient-dev -y
+sudo nano /etc/mysql/my.cnf
+------------
+[mysqld] 
+character-set-client-handshake = FALSE 
+character-set-server = utf8mb4 
+collation-server = utf8mb4_unicode_ci 
+[mysql] 
+default-character-set = utf8mb4
+------------
+sudo service mysql restart
+sudo apt-get install xvfb libfontconfig wkhtmltopdf -y
+sudo apt-get install pkg-config python3-dev default-libmysqlclient-dev build-essential -y
+
+sudo apt install curl 
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+source ~/.profile
+nvm install 18
+sudo apt-get install npm
+sudo npm install -g yarn
+
+sudo -H pip3 install frappe-bench
+bench --version
+dev:
+bench init [-skip-redis-config-generation fpr localdev] frappe-bench
+cd frappe-bench
+chmod -R o+rx /home/frappe
+bench set-config -g db_host mariadb
+bench set-config -g redis_cache redis://redis-cache:6379
+bench set-config -g redis_queue redis://redis-queue:6379
+bench set-config -g redis_socketio redis://redis-queue:6379
+bench new-site doral-shop.kz
+# bench use doral-shop.kz
+bench --site doral-shop.kz set-config developer_mode 1
+bench --site doral-shop.kz clear-cache
+
+
+bench --site doral-shop.kz set-config ignore_csrf 1
+
+
+
+bench get-app erpnext --branch version-15
+bench get-app payments --branch version-15
+bench get-app https://github.com/Faizullin/doral-shop-frappe-lms-app.git
+bench --site doral-shop.kz install-app erpnext
+bench --site doral-shop.kz install-app payments
+bench --site doral-shop.kz install-app webshop
+
+
+
+
+
+prod:
+Commands:
+
+bench init lms-app
+bench start
+
+
+sudo bench setup production frappe
+bench setup socketio
+bench setup supervisor
+bench setup redis
+sudo supervisorctl reload
+bench restart
+
+
+Add email account with gmail passwords: https://myaccount.google.com/apppasswords
+website-settings: remove disable signups, add brand image
+Add icon
+Website settings: add index.html
+Add Doctype: HomePageSettings
+Add field "item_characteristics_values" table referring to ItemCharacteristicsBlock in DocType Item
+WORKSPACE EDIT:
+ - LMS Workspace /app/workspace/LMS
+Add language
+
+
+

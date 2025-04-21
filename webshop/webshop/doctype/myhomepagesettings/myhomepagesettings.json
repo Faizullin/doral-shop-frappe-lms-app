@@ -1,0 +1,52 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-04-21 04:38:24.601126",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "hero_slideshow",
+  "popular_categories"
+ ],
+ "fields": [
+  {
+   "fieldname": "hero_slideshow",
+   "fieldtype": "Table",
+   "label": "Hero Slideshow",
+   "options": "Website Slideshow Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "popular_categories",
+   "fieldtype": "Table",
+   "label": "Popular Categories",
+   "options": "Website Item Group",
+   "reqd": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2025-04-21 04:46:07.110792",
+ "modified_by": "Administrator",
+ "module": "Webshop",
+ "name": "MyHomePageSettings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

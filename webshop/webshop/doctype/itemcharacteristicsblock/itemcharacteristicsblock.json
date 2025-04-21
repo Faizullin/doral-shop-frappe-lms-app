@@ -1,0 +1,55 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-04-21 21:18:06.579535",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "field_name",
+  "field_value",
+  "parent_field_name",
+  "dynamic"
+ ],
+ "fields": [
+  {
+   "fieldname": "field_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Field Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "field_value",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Field Value",
+   "reqd": 1
+  },
+  {
+   "fieldname": "parent_field_name",
+   "fieldtype": "Select",
+   "label": "Parent Field"
+  },
+  {
+   "default": "0",
+   "fieldname": "dynamic",
+   "fieldtype": "Check",
+   "label": "Dynamic"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-04-21 21:20:49.596183",
+ "modified_by": "Administrator",
+ "module": "Webshop",
+ "name": "ItemCharacteristicsBlock",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -44,7 +44,7 @@ def get_context(context):
         for slide in homepage_doc.hero_slideshow
     ]
     context.hit_products = get_products_data(homepage_doc.hit_products)
-    context.new_arrival_products = get_products_data(homepage_doc.hit_products)
+    context.new_arrival_products = get_products_data(homepage_doc.new_arrival_products)
     
     popular_categories_codes = [
         i.item_group for i in homepage_doc.popular_categories
