@@ -130,7 +130,7 @@
                 class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
                 {% for product in hit_products %}
                 <div class="col">
-                  <div class="product-item position-relative">
+                  <div class="product-item position-relative" data-item-code="{{ product.item_code }}">
                     <figure>
                       <a href="{{ product.url or '#' }}"
                         title="{{ product.title }}">
@@ -247,7 +247,7 @@
         <div class="products-carousel swiper">
           <div class="swiper-wrapper">
             {% for product in new_arrival_products %}
-            <div class="product-item position-relative swiper-slide">
+            <div class="product-item position-relative swiper-slide" data-item-code="{{ product.item_code }}">
               <figure>
                 <a href="{{ product.url or '#' }}" title="{{ product.title }}">
                   <img src="{{ product.image }}" class="tab-image"
@@ -276,13 +276,10 @@
 {% include 'templates/components/footer.html' %}
 {% endblock %}
 
-{# {% block scripts %}
+{% block scripts %}
 <script>
     $(document).ready(function () {
-      $(".products-carousel .swiper-slide").each(function () {
-        var $this = $(this);
-        console.log($this);
-      });
+      webshop.webshop.shopping_cart.bind_add_to_cart_action();
     });
   </script>
-{% endblock %} #}
+{% endblock %} 

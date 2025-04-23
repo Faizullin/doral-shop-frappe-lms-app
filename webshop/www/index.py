@@ -28,7 +28,8 @@ def get_products_data(products_data):
             "title": item.item_name,
             "image": item.thumbnail,
             "url": item.route,
-            "price": price_dict.get(item_code )
+            "price": price_dict.get(item_code ),
+            "item_code": item_code,
         })
     return res
 

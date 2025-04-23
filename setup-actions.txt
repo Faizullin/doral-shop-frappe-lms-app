@@ -88,7 +88,7 @@ Website settings: add index.html
 Add Doctype: HomePageSettings
 Add field "item_characteristics_values" table referring to ItemCharacteristicsBlock in DocType Item
 WORKSPACE EDIT:
- - LMS Workspace /app/workspace/LMS
+ - Home Workspace /app/workspace/Home
 Add language
 
 

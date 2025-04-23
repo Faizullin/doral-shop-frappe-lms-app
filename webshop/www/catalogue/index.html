@@ -83,7 +83,7 @@
                 class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
                 {% for product in products %}
                 <div class="col">
-                    <div class="product-item card p-3 border rounded">
+                    <div class="product-item card p-3 border rounded" data-item-code="{{ product.item_code }}">
                         <figure>
                             <a href="{{ product.url or '#' }}"
                                 title="{{ product.title }}">

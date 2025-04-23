@@ -1,0 +1,96 @@
+{% extends 'templates/layouts/default.html' %}
+
+{% set title = "Корзина" %}
+
+{% block content %}
+{% include 'templates/components/header.html' %}
+
+    <section class="py-5 overflow-hidden">
+        <div class="container-fluid">
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="section-header d-flex flex-wrap justify-content-between mb-2">
+                        <h2 class="section-title">
+                            Корзина
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="cart-list-view row">
+                        <div class="col-md-7">
+                            <div class="cart-grid">
+                                <div class="cart-item d-flex justify-content-between align-items-start mb-3">
+                                    <div class="d-flex justify-content-start align-items-center">
+                                        <div class="cart-item-checkbox h-100 me-2">
+                                            <input type="checkbox" id="cart-item-1" class="form-check-input" checked>
+                                        </div>
+                                        <div class="cart-item-image me-3">
+                                            <img src="/src/assets/my/images/banner-image-1.jpg" alt="Product 1">
+                                        </div>
+                                    </div>
+                                    <div class="cart-item-details flex-grow-1 ms-3 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p class="cart-item-title mb-0">Product Title</p>
+                                                <button class="btn">
+                                                    <svg width="16" height="16">
+                                                        <use xlink:href="#close"></use>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <p class="cart-item-description">Product Title</p>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="cart-item-price">
+                                                <span class="value">19.99</span>
+                                                KZT
+                                            </p>
+                                            <div class="cart-item-quantity-wrapper">
+                                                <button type="button" class="btn minus-btn" data-type="minus">
+                                                    <svg width="12" height="12">
+                                                        <use xlink:href="#minus"></use>
+                                                    </svg>
+                                                </button>
+                                                <div class="input-number">1</div>
+                                                <button type="button" class="btn plus-btn" data-type="plus">
+                                                    <svg width="12" height="12">
+                                                        <use xlink:href="#plus"></use>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4  offset-md-1">
+                            <div class="cart-summary">
+                                <p class="cart-summary-products-count">Товары: <span class="value">4шт</span></p>
+                                <div class="cart-summary-total d-flex justify-content-between">
+                                    <p class="label">Total:</p>
+                                    <p class="">
+                                        <span class="value">$59.98</span>
+                                        KZT
+                                    </p>
+                                </div>
+                                <button class="lg-action-btn btn btn-primary w-100">Оформить заказ</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+{% include 'templates/components/footer.html' %}
+{% endblock %}
+
+{% block scripts %}
+ {{ include_script('cart.bundle.js') }}
+{% endblock %} 
+    

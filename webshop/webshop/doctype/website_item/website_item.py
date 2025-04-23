@@ -78,6 +78,21 @@ class WebsiteItem(WebsiteGenerator):
 			result = query.run(as_list=True)
 
 			self.old_website_item_groups = [x[0] for x in result]
+		
+
+
+		from webshop.webshop.utils.my_logger import my_logger
+		my_logger.debug(f"{self.item_characteristics_values}")
+		if self.content_render_type == "Standard Grids":
+			if len(self.item_characteristics_values) < 2:
+				frappe.throw(
+					_("Please add at least 2 characteristics blocks"),
+					title=_("Mandatory"),
+					exc=frappe.ValidationError,
+				)
+			for row in self.item_characteristics_values:
+				my_logger.debug(f"iter {row.__dict__}")
+
 
 	def on_update(self):
 		invalidate_cache_for_web_item(self)
@@ -271,51 +286,45 @@ class WebsiteItem(WebsiteGenerator):
 
 
 
-		from webshop.webshop.utils.my_logger import my_logger
+		# item = frappe.get_doc("Item", self.item_code)
+		raw_fields = self.item_characteristics_values
+		blocks = {} 
   
-		item = frappe.get_doc("Item", self.item_code)
-		raw_fields = item.get("item_characteristics_values") or []
-		blocks = {}  # parent_name: list of fields
+		i_block_counter = 0
+		current_block_row = None
+		current_break_value = None
 		for row in raw_fields:
-			if not row.get("parent_field_name"):
-				blocks[row.get("field_value")] = {
-					"field_name": row.get("field_name"),
-					"field_value": row.get("field_value"),
-					"fields": []
+			if row.type == "Card Break":
+				current_block_row = row
+				current_break_value = current_block_row.field_value or str(i_block_counter)
+				blocks[current_break_value] = {
+					"label": current_block_row.label,
+					"field_value": current_block_row.field_value,
+					"fields": [],
 				}
-		my_logger.debug(f"blocks: {blocks}")
-		for row in raw_fields:
-			parent = row.get("parent_field_name")
-			dynamic = row.get("dynamic")
-			field_label = row.get("field_name")
-			field_value = row.get("field_value")
-   
-			if parent is None:
-				continue
-  			
-			parent_block = blocks.get(parent, None)
-			if parent_block is None:
-				raise ValueError(f"Parent field '{parent}' not found in blocks")
-			if dynamic:
-				try:
-					resolved_value = item.get(field_value)
-					if resolved_value is None:
-						raise ValueError(f"Missing value for dynamic field '{field_value}'")
-				except Exception as e:
-					frappe.throw(f"Error resolving dynamic field '{field_value}': {e}")
-			else:
+				i_block_counter +=1
+			elif current_block_row is not None:
+				label = row.get("label")
+				field_value = row.get("field_value")
+				dynamic = row.get("dynamic")
+				# if dynamic:
+				# 	try:
+				# 		resolved_value = self.item_group.get(field_value)
+				# 		if resolved_value is None:
+				# 			raise ValueError(f"Missing value for dynamic field '{field_value}'")
+				# 	except Exception as e:
+				# 		frappe.throw(f"Error resolving dynamic field '{field_value}': {e}")
+				# else:
 				resolved_value = field_value
-
-			parent_block["fields"].append({
-				"field_name": field_label,
-				"field_value": resolved_value,
-				"dynamic": dynamic
-			})
-  
+				blocks[current_break_value]["fields"].append({
+					"label": label,
+					"field_value": resolved_value,
+					"dynamic": dynamic
+				})
+	
 		# Convert blocks dict to list
 		context.characteristic_blocks = list(blocks.values())
-		context.item = item
-		my_logger.debug(f"context: {context.characteristic_blocks}")
+		# context.item = item
 		return context
 
 	def set_selected_attributes(self, variants, context, attribute_values_available):

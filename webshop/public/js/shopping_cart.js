@@ -20,6 +20,7 @@ var getParams = function (url) {
 
 frappe.ready(function() {
 	var full_name = frappe.session && frappe.session.user_fullname;
+	console.log("full_name", full_name);
 	// update user
 	if(full_name) {
 		$('.navbar li[data-label="User"] a')

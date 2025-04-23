@@ -51,7 +51,10 @@
   "website_item_groups",
   "advanced_display_section",
   "website_content",
-  "raw_price_value"
+  "raw_price_value",
+  "additional_characteristics_section",
+  "content_render_type",
+  "item_characteristics_values"
  ],
  "fields": [
   {
@@ -348,6 +351,25 @@
    "label": "My KZT Raw Price value",
    "non_negative": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "additional_characteristics_section",
+   "fieldtype": "Section Break",
+   "label": "Additional Characteristics"
+  },
+  {
+   "default": "Standard Grids",
+   "fieldname": "content_render_type",
+   "fieldtype": "Select",
+   "label": "Content Render Type",
+   "options": "Standard Grids\nTexto",
+   "reqd": 1
+  },
+  {
+   "fieldname": "item_characteristics_values",
+   "fieldtype": "Table",
+   "label": "Item Characteristics Values",
+   "options": "ItemCharacteristicsBlock"
   }
  ],
  "has_web_view": 1,
@@ -355,8 +377,8 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-04-09 01:16:29.125711",
- "modified_by": "amanzholtasbaev@gmail.com",
+ "modified": "2025-04-22 18:37:13.727156",
+ "modified_by": "Administrator",
  "module": "Webshop",
  "name": "Website Item",
  "naming_rule": "Expression (old style)",
